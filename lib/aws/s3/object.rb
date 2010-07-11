@@ -179,11 +179,21 @@ module AWS
         end
         
         # Makes a copy of the object with <tt>key</tt> to <tt>copy_key</tt>, preserving the ACL of the existing object if the <tt>:copy_acl</tt> option is true (default false).
-        def copy(key, copy_key, bucket = nil, options = {})
+        # If the copy_key starts with a /, the first part of the copy_key "path" is interpreted as the new bucket name.
+        #
+        # For example:
+        #
+        # AWS::S3::S3Object.copy('key_to_copy', '/different_bucket/key_to_copy_to', 'bucket-to-copy-from')
+        #
+        # Will copy the "key_to_copy" file from the "bucket-to-copy-from" bucket, into the "different_bucket" bucket, named "key_to_copy_to"
+        #
+        # copy_key values without a leading slash will be copied into the same bucket as the source file, using the new key.
+        def self.copy(key, copy_key, bucket = nil, options = {})
           bucket          = bucket_name(bucket)
           source_key      = path!(bucket, key)
-          default_options = {'x-amz-copy-source' => source_key}
-          target_key      = path!(bucket, copy_key)
+          default_options = {'x-amz-copy-source' => source_key}        
+          target_key      = (copy_key[0].chr == '/' ? copy_key : path!(bucket, copy_key) )
+
           returning put(target_key, default_options) do
             acl(copy_key, bucket, acl(key, bucket)) if options[:copy_acl]
           end
