@@ -1,16 +1,6 @@
 #:stopdoc:
 
 class Hash
-  def to_query_string(include_question_mark = true)
-    query_string = ''
-    unless empty?
-      query_string << '?' if include_question_mark
-      query_string << inject([]) do |params, (key, value)| 
-        params << "#{key}=#{value}" 
-      end.join('&')
-    end
-    query_string
-  end
   
   def to_normalized_options
     # Convert all option names to downcased strings, and replace underscores with hyphens

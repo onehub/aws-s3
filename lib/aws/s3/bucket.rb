@@ -178,7 +178,18 @@ module AWS
               options = name
               name    = nil
             end
-            "/#{bucket_name(name)}#{RequestOptions.process(options).to_query_string}"
+            "/#{bucket_name(name)}#{to_query_string(RequestOptions.process(options))}"
+          end
+
+          def to_query_string(hash, include_question_mark = true)
+            query_string = ''
+            unless hash.empty?
+              query_string << '?' if include_question_mark
+              query_string << hash.inject([]) do |params, (key, value)|
+                params << "#{key}=#{value}"
+              end.join('&')
+            end
+            query_string
           end
       end
       
