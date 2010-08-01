@@ -188,10 +188,10 @@ module AWS
         # Will copy the "key_to_copy" file from the "bucket-to-copy-from" bucket, into the "different_bucket" bucket, named "key_to_copy_to"
         #
         # copy_key values without a leading slash will be copied into the same bucket as the source file, using the new key.
-        def self.copy(key, copy_key, bucket = nil, options = {})
+        def copy(key, copy_key, bucket = nil, options = {})
           bucket          = bucket_name(bucket)
           source_key      = path!(bucket, key)
-          default_options = {'x-amz-copy-source' => source_key}        
+          default_options = {'x-amz-copy-source' => source_key}
           target_key      = (copy_key[0].chr == '/' ? copy_key : path!(bucket, copy_key) )
 
           returning put(target_key, default_options) do
