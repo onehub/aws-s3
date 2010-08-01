@@ -1,5 +1,11 @@
 head:
 
+0.6.2.mubi2:
+
+- Remove potential conflict of to_query_string method on Hash [Gabe da Silveira]
+
+0.6.2.mubi1:
+
 - Allow cross bucket copying implicitly by use of a leading slash on target key [Jon Moses]
 - Disable the ability for clever name-based Bucket subclassing by redefining const_missing.  Does anyone rely on this? [Renato Correa]
 
