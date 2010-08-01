@@ -1,5 +1,8 @@
 head:
 
+- Allow cross bucket copying implicitly by use of a leading slash on target key [Jon Moses]
+- Disable the ability for clever name-based Bucket subclassing by redefining const_missing.  Does anyone rely on this? [Renato Correa]
+
 0.6.2:
 
 - Apparently need to use custom __method__ in Ruby versions right up to 1.8.7.
