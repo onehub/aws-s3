@@ -192,7 +192,13 @@ module AWS
           bucket          = bucket_name(bucket)
           source_key      = path!(bucket, key)
           default_options = {'x-amz-copy-source' => source_key}
-          target_key      = (copy_key[0].chr == '/' ? copy_key : path!(bucket, copy_key) )
+
+          if copy_key[0].chr == '/'
+            target_key = copy_key
+            copy_key.gsub!(%r{\A/[^/]+/}, '') # Strip bucket so :copy_acl works below
+          else
+            target_key = path!(bucket, copy_key)
+          end
 
           returning put(target_key, default_options) do
             acl(copy_key, bucket, acl(key, bucket)) if options[:copy_acl]
