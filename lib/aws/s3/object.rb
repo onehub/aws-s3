@@ -194,8 +194,18 @@ module AWS
           default_options = {'x-amz-copy-source' => source_key}
           target_key      = (copy_key[0].chr == '/' ? copy_key : path!(bucket, copy_key) )
 
+          if copy_key[0].chr == '/'
+            target_key   = copy_key
+            acl_copy_key = copy_key.gsub(%r{\A/([^/]+)/}, '')
+            acl_bucket   = $1
+          else
+            target_key   = path!(bucket, copy_key)
+            acl_copy_key = copy_key
+            acl_bucket   = bucket
+          end
+
           returning put(target_key, default_options) do
-            acl(copy_key, bucket, acl(key, bucket)) if options[:copy_acl]
+            acl(acl_copy_key, acl_bucket, acl(key, bucket)) if options[:copy_acl]
           end
         end
         
