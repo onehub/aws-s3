@@ -72,3 +72,31 @@ class BucketTest < Test::Unit::TestCase
     Bucket.delete(bucket_name, :force => true)
   end
 end
+
+class ToQueryStringTest < Test::Unit::TestCase
+  def test_to_query_string
+    # Because hashes aren't ordered, I'm mostly testing against hashes with just one key
+    symbol_keys = {:one => 1}
+    string_keys = {'one' => 1}
+    expected    = '?one=1'
+    [symbol_keys, string_keys].each do |hash|
+      assert_equal expected, Bucket.send(:to_query_string, hash)
+    end
+  end
+
+  def test_empty_hash_returns_no_query_string
+    assert_equal '', Bucket.send(:to_query_string, {})
+  end
+
+  def test_include_question_mark
+    hash = {:one => 1}
+    assert_equal '?one=1', Bucket.send(:to_query_string, hash)
+    assert_equal 'one=1', Bucket.send(:to_query_string, hash, false)
+  end
+
+  def test_elements_joined_by_ampersand
+    hash = {:one => 1, :two => 2}
+    qs   = Bucket.send(:to_query_string, hash)
+    assert qs['one=1&two=2'] || qs['two=2&one=1']
+  end
+end
