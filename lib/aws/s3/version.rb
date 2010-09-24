@@ -4,7 +4,7 @@ module AWS
       MAJOR    = '0'
       MINOR    = '6'
       TINY     = '2'
-      BETA     = 'mubi4'
+      BETA     = Time.now.to_i.to_s
     end
     
     Version = [VERSION::MAJOR, VERSION::MINOR, VERSION::TINY, VERSION::BETA].compact * '.'

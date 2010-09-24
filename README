@@ -1,4 +1,4 @@
-Note: This is a fork with some critical enhancements for our current usage of aws-s3 at mubi.com.
+This is a curated fork of aws-s3 with some critical enhancements for our current usage of aws-s3 at mubi.com. See the CHANGELOG.
 
 = AWS::S3
 
