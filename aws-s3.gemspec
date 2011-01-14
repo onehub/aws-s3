@@ -3,8 +3,8 @@ Gem::Specification.new do |s|
   s.version = '0.6.2.20110114001'
   s.summary = "Client library for Amazon's Simple Storage Service's REST API"
   s.description = s.summary
-  s.email = 'info@onehub.com'
-  s.author = 'Cast of 100s'
+  s.email = 'marcel@vernix.org'
+  s.author = 'Marcel Molina Jr.'
   s.has_rdoc = true
   s.extra_rdoc_files = %w(README COPYING INSTALL)
   s.homepage = 'http://amazon.rubyforge.org'
