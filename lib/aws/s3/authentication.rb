@@ -91,7 +91,7 @@ module AWS
       class Header < Signature #:nodoc:
         def initialize(*args)
           super
-          self << "AWS #{access_key_id}:#{encoded_canonical}"
+          self << "#{access_key_id}"
         end
       end
       
